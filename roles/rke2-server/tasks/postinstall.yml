@@ -1,0 +1,37 @@
+- name: Wait for kubectl to be available
+  wait_for:
+    path: /var/lib/rancher/rke2/bin/kubectl
+    timeout: 300
+
+# Symlink kubectl into PATH
+- name: Symlink kubectl
+  file:
+    src: /var/lib/rancher/rke2/bin/kubectl
+    dest: /usr/local/bin/kubectl
+    state: link
+    force: yes
+
+# Ensure kube config directory for root exists
+- name: Ensure root kube config directory exists
+  file:
+    path: /root/.kube
+    state: directory
+    mode: "0700"
+
+# Link RKE2 kubeconfig for root
+- name: Configure kubeconfig for root
+  file:
+    src: /etc/rancher/rke2/rke2.yaml
+    dest: /root/.kube/config
+    state: link
+    force: yes
+
+# Wait until Kubernetes API is responsive
+- name: Wait for Kubernetes API to be ready
+  command: kubectl get nodes
+  environment:
+    KUBECONFIG: /etc/rancher/rke2/rke2.yaml
+  register: kubectl_result
+  retries: 10
+  delay: 15
+  until: kubectl_result.rc == 0

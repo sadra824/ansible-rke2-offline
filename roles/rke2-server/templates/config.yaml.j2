@@ -1,0 +1,6 @@
+write-kubeconfig-mode: "{{ rke2_write_kubeconfig }}"
+node-name: "{{ rke2_node_name }}"
+tls-san:
+{% for san in rke2_tls_sans %}
+- {{ san }}
+{% endfor %}

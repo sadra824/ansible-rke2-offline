@@ -1,0 +1,5 @@
+- name: Install RKE2 Server (Single Node)
+  hosts: rke2_server
+  become: true
+  roles:
+    - rke2-server

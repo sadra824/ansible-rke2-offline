@@ -1,0 +1,15 @@
+[Unit]
+Description=RKE2 Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/local/bin/rke2 server
+Restart=always
+KillMode=process
+Delegate=yes
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target

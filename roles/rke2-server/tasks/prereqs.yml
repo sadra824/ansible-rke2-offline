@@ -1,0 +1,16 @@
+- name: Disable swap
+  command: swapoff -a
+  ignore_errors: true
+
+- name: Comment swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: "^([^#].* swap .*)"
+    replace: '#\\1'
+
+- name: Install AppArmor tools
+  apt:
+    name:
+      - apparmor
+    state: present
+    update_cache: no

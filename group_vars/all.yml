@@ -1,0 +1,5 @@
+rke2_write_kubeconfig: "0644"
+rke2_node_name: single-node
+rke2_tls_sans:
+  - 127.0.0.1
+  - localhost

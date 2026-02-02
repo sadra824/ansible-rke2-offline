@@ -1,0 +1,9 @@
+- name: Enable rke2-server
+  systemd:
+    name: rke2-server
+    enabled: true
+
+- name: Start rke2-server
+  systemd:
+    name: rke2-server
+    state: started

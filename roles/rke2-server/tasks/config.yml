@@ -1,0 +1,11 @@
+- name: Create RKE2 config directory
+  file:
+    path: "{{ rke2_config_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Render RKE2 config
+  template:
+    src: config.yaml.j2
+    dest: "{{ rke2_config_file }}"
+    mode: "0644"
